@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Мои Записи - Telegram Mini App</title>
+<!-- Fonts and Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111a22", // Using the dark color from the provided components as base
+              "surface-dark": "#1e2936", // A slightly lighter shade for cards
+              "text-secondary": "#92adc9",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem", // rounded-lg
+              "lg": "0.75rem",     // rounded-xl
+              "xl": "1rem",        // rounded-2xl
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        /* Telegram WebApp mimics */
+        body {
+            background-color: var(--tg-theme-bg-color, #111a22);
+            color: var(--tg-theme-text-color, #ffffff);
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Custom scrollbar hiding for cleaner mobile look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display h-screen flex flex-col overflow-hidden text-slate-900 dark:text-white">
+<!-- Sticky Header -->
+<header class="flex-none bg-background-light dark:bg-background-dark pt-2 pb-2 px-4 z-20">
+<div class="flex items-center justify-between h-14">
+<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Мои Записи</h1>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-200 dark:hover:bg-surface-dark transition-colors text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-[28px]">settings</span>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="mt-1 mb-2">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-text-secondary">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="block w-full h-11 pl-10 pr-4 text-base rounded-lg border-none bg-slate-200 dark:bg-surface-dark placeholder-text-secondary text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:outline-none transition-shadow" placeholder="Поиск по записям..." type="text"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<main class="flex-1 overflow-y-auto no-scrollbar px-4 pb-32">
+<div class="space-y-3 mt-2">
+<!-- Date Divider -->
+<div class="flex items-center py-2">
+<span class="text-xs font-semibold uppercase tracking-wider text-text-secondary">Сегодня</span>
+</div>
+<!-- List Item 1 -->
+<article class="relative group active:scale-[0.98] transition-transform duration-100">
+<div class="absolute inset-0 bg-primary/5 dark:bg-primary/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative flex gap-4 bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-slate-100 dark:border-none">
+<div class="flex flex-col items-center gap-1 shrink-0">
+<div class="flex items-center justify-center rounded-full bg-orange-100 dark:bg-orange-500/20 size-12 text-2xl">
+                            😰
+                        </div>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-semibold text-slate-900 dark:text-white truncate pr-2">Конфликт на работе</h3>
+<span class="text-xs font-medium text-text-secondary whitespace-nowrap">14:30</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-gray-400 line-clamp-2 leading-relaxed mb-2">
+                            Я чувствовал, что меня не слышат во время совещания, и это вызвало сильное напряжение...
+                        </p>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-[#233648] px-2 py-1 text-xs font-medium text-slate-600 dark:text-text-secondary ring-1 ring-inset ring-gray-500/10">Тревога</span>
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-[#233648] px-2 py-1 text-xs font-medium text-slate-600 dark:text-text-secondary ring-1 ring-inset ring-gray-500/10">Работа</span>
+</div>
+</div>
+<div class="flex items-center justify-center text-text-secondary">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Date Divider -->
+<div class="flex items-center py-2 mt-4">
+<span class="text-xs font-semibold uppercase tracking-wider text-text-secondary">Вчера</span>
+</div>
+<!-- List Item 2 -->
+<article class="relative group active:scale-[0.98] transition-transform duration-100">
+<div class="relative flex gap-4 bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-slate-100 dark:border-none">
+<div class="flex flex-col items-center gap-1 shrink-0">
+<div class="flex items-center justify-center rounded-full bg-purple-100 dark:bg-purple-500/20 size-12 text-2xl">
+                            😨
+                        </div>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-semibold text-slate-900 dark:text-white truncate pr-2">Страх перед выступлением</h3>
+<span class="text-xs font-medium text-text-secondary whitespace-nowrap">09:15</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-gray-400 line-clamp-2 leading-relaxed mb-2">
+                            Руки дрожали, мысли путались, казалось что все смотрят только на мои ошибки.
+                        </p>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-[#233648] px-2 py-1 text-xs font-medium text-slate-600 dark:text-text-secondary ring-1 ring-inset ring-gray-500/10">Страх</span>
+</div>
+</div>
+<div class="flex items-center justify-center text-text-secondary">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Date Divider -->
+<div class="flex items-center py-2 mt-4">
+<span class="text-xs font-semibold uppercase tracking-wider text-text-secondary">12 Октября</span>
+</div>
+<!-- List Item 3 -->
+<article class="relative group active:scale-[0.98] transition-transform duration-100">
+<div class="relative flex gap-4 bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-slate-100 dark:border-none">
+<div class="flex flex-col items-center gap-1 shrink-0">
+<div class="flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-500/20 size-12 text-2xl">
+                            😔
+                        </div>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-semibold text-slate-900 dark:text-white truncate pr-2">Усталость от рутины</h3>
+<span class="text-xs font-medium text-text-secondary whitespace-nowrap">20:00</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-gray-400 line-clamp-2 leading-relaxed mb-2">
+                            Каждый день одно и то же, не вижу смысла в действиях. Хочется просто лежать...
+                        </p>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-[#233648] px-2 py-1 text-xs font-medium text-slate-600 dark:text-text-secondary ring-1 ring-inset ring-gray-500/10">Грусть</span>
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-[#233648] px-2 py-1 text-xs font-medium text-slate-600 dark:text-text-secondary ring-1 ring-inset ring-gray-500/10">Личное</span>
+</div>
+</div>
+<div class="flex items-center justify-center text-text-secondary">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- List Item 4 -->
+<article class="relative group active:scale-[0.98] transition-transform duration-100">
+<div class="relative flex gap-4 bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-slate-100 dark:border-none">
+<div class="flex flex-col items-center gap-1 shrink-0">
+<div class="flex items-center justify-center rounded-full bg-green-100 dark:bg-green-500/20 size-12 text-2xl">
+                            😌
+                        </div>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-semibold text-slate-900 dark:text-white truncate pr-2">Удачная встреча</h3>
+<span class="text-xs font-medium text-text-secondary whitespace-nowrap">10:00</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-gray-400 line-clamp-2 leading-relaxed mb-2">
+                            Сегодня удалось договориться с клиентом. Чувствую прилив сил и вдохновения.
+                        </p>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-[#233648] px-2 py-1 text-xs font-medium text-slate-600 dark:text-text-secondary ring-1 ring-inset ring-gray-500/10">Радость</span>
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-[#233648] px-2 py-1 text-xs font-medium text-slate-600 dark:text-text-secondary ring-1 ring-inset ring-gray-500/10">Успех</span>
+</div>
+</div>
+<div class="flex items-center justify-center text-text-secondary">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Bottom Spacer for Floating UI -->
+<div class="h-20"></div>
+</div>
+</main>
+<!-- Floating Bottom Actions -->
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark pt-12 pb-6 z-30">
+<div class="flex flex-col gap-3 max-w-md mx-auto w-full">
+<button class="flex items-center justify-center w-full bg-primary hover:bg-blue-600 text-white font-bold h-14 rounded-xl shadow-lg active:scale-[0.99] transition-all gap-2">
+<span class="material-symbols-outlined">add</span>
+<span>Новая запись</span>
+</button>
+<button class="flex items-center justify-center w-full bg-transparent hover:bg-slate-200 dark:hover:bg-surface-dark text-slate-600 dark:text-text-secondary font-medium h-10 rounded-lg transition-colors gap-2 text-sm">
+<span class="material-symbols-outlined text-lg">menu_book</span>
+<span>Как это работает?</span>
+</button>
+</div>
+</div>
+</body></html>

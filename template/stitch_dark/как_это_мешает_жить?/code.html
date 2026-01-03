@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Как это мешает жить?</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1380ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111a22",
+                        "surface-dark": "#233648",
+                        "text-secondary": "#92adc9"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for textarea */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background-color: #324d67;
+            border-radius: 4px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased overflow-x-hidden selection:bg-primary/30 min-h-screen flex flex-col relative group/design-root">
+<!-- Top Navigation / Progress -->
+<div class="sticky top-0 z-20 bg-background-light dark:bg-background-dark w-full px-4 pt-4 pb-2">
+<!-- Optional Back Button for Navigation Context -->
+<div class="flex items-center justify-between mb-4">
+<button class="text-text-secondary hover:text-white transition-colors p-2 -ml-2 rounded-full active:bg-surface-dark/50">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<span class="text-xs font-medium text-text-secondary uppercase tracking-wider">Шаг 4 из 6</span>
+<div class="w-8"></div> <!-- Spacer for balance -->
+</div>
+<!-- Page Indicators (Reused Component) -->
+<div class="flex w-full flex-row items-center justify-center gap-2">
+<div class="h-1.5 w-full max-w-[40px] rounded-full bg-[#324d67]"></div>
+<div class="h-1.5 w-full max-w-[40px] rounded-full bg-[#324d67]"></div>
+<div class="h-1.5 w-full max-w-[40px] rounded-full bg-[#324d67]"></div>
+<div class="h-1.5 w-full max-w-[40px] rounded-full bg-primary shadow-[0_0_10px_rgba(19,128,236,0.5)]"></div>
+<div class="h-1.5 w-full max-w-[40px] rounded-full bg-[#324d67]/40"></div>
+<div class="h-1.5 w-full max-w-[40px] rounded-full bg-[#324d67]/40"></div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col px-4 pb-28"> <!-- pb-28 to avoid overlap with fixed bottom button -->
+<!-- Headline (Reused Component) -->
+<h1 class="text-[#111418] dark:text-white tracking-tight text-[28px] md:text-[32px] font-bold leading-tight text-left pb-2 pt-4">
+            Как это мешает жить?
+        </h1>
+<!-- BodyText (Reused Component) -->
+<p class="text-[#637588] dark:text-[#d0dbe7] text-base font-normal leading-relaxed pb-6">
+            Опишите, какие ограничения, негативные эмоции или физические ощущения вызывает эта проблема в вашей повседневной жизни.
+        </p>
+<!-- ActionsBar / Hint (Modified Component) -->
+<!-- Modified to be a clickable pill button suitable for a "Hint" action -->
+<div class="flex flex-wrap justify-start mb-6">
+<button class="group flex items-center gap-3 bg-surface-dark/50 hover:bg-surface-dark border border-transparent hover:border-primary/30 pr-5 pl-3 py-2.5 rounded-xl transition-all duration-200">
+<div class="rounded-full bg-primary/20 group-hover:bg-primary/30 p-1.5 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[20px]">lightbulb</span>
+</div>
+<div class="flex flex-col items-start">
+<p class="text-white text-sm font-medium leading-none mb-1">Подсказка</p>
+<p class="text-text-secondary text-xs leading-none">Примеры заполнения</p>
+</div>
+</button>
+</div>
+<!-- TextField (Reused Component) -->
+<div class="flex flex-col flex-1 w-full">
+<label class="flex flex-col flex-1 w-full gap-2">
+<div class="flex justify-between items-baseline">
+<p class="text-[#111418] dark:text-white text-base font-medium leading-normal">Последствия</p>
+<span class="text-xs text-text-secondary">Необязательно</span>
+</div>
+<div class="relative flex-1 flex flex-col">
+<textarea class="form-input flex w-full flex-1 min-h-[240px] resize-none rounded-2xl text-[#111418] dark:text-white placeholder:text-[#637588] dark:placeholder:text-[#92adc9] bg-[#f0f2f4] dark:bg-surface-dark border-none focus:ring-2 focus:ring-primary/50 focus:outline-none p-4 text-base font-normal leading-relaxed shadow-inner" placeholder="Например: я избегаю встреч с друзьями, я плохо сплю, я срываюсь на близких. Я чувствую постоянное напряжение в плечах..."></textarea>
+<!-- Character count or corner icon decoration -->
+<div class="absolute bottom-4 right-4 pointer-events-none opacity-50">
+<span class="material-symbols-outlined text-text-secondary text-xl">edit_note</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Bottom Action Bar (Simulating Mobile App Tab/Button) -->
+<div class="fixed bottom-0 left-0 w-full z-30 p-4 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-t border-gray-200 dark:border-surface-dark">
+<div class="max-w-[480px] mx-auto w-full">
+<button class="w-full flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary/90 py-4 text-white font-semibold text-lg shadow-lg active:scale-[0.98] transition-all duration-200">
+<span>Далее</span>
+<span class="material-symbols-outlined text-[20px] font-bold">arrow_forward</span>
+</button>
+</div>
+</div>
+</body></html>

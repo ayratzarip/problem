@@ -1,0 +1,133 @@
+import WebApp from '@twa-dev/sdk';
+import type { Theme } from '../types';
+
+/**
+ * Initialize Telegram WebApp
+ */
+export function initTelegram(): void {
+  try {
+    WebApp.ready();
+    WebApp.expand();
+    
+    // Enable closing confirmation if there are unsaved changes
+    WebApp.enableClosingConfirmation();
+  } catch (error) {
+    console.warn('Telegram WebApp not available:', error);
+  }
+}
+
+/**
+ * Get current theme from Telegram
+ */
+export function getTelegramTheme(): Theme {
+  try {
+    return WebApp.colorScheme === 'light' ? 'light' : 'dark';
+  } catch {
+    return 'dark';
+  }
+}
+
+/**
+ * Setup back button handler
+ */
+export function setupBackButton(callback: () => void): void {
+  try {
+    WebApp.BackButton.show();
+    WebApp.BackButton.onClick(callback);
+  } catch {
+    // BackButton not available outside Telegram
+  }
+}
+
+/**
+ * Hide back button
+ */
+export function hideBackButton(): void {
+  try {
+    WebApp.BackButton.hide();
+  } catch {
+    // BackButton not available outside Telegram
+  }
+}
+
+/**
+ * Show confirmation dialog
+ */
+export function showConfirm(message: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    try {
+      WebApp.showConfirm(message, (confirmed) => {
+        resolve(confirmed);
+      });
+    } catch {
+      // Fallback to native confirm
+      resolve(window.confirm(message));
+    }
+  });
+}
+
+/**
+ * Show alert
+ */
+export function showAlert(message: string): Promise<void> {
+  return new Promise((resolve) => {
+    try {
+      WebApp.showAlert(message, () => {
+        resolve();
+      });
+    } catch {
+      // Fallback to native alert
+      window.alert(message);
+      resolve();
+    }
+  });
+}
+
+/**
+ * Trigger haptic feedback
+ */
+export function hapticFeedback(type: 'light' | 'medium' | 'heavy' | 'success' | 'warning' | 'error'): void {
+  try {
+    if (type === 'success' || type === 'warning' || type === 'error') {
+      WebApp.HapticFeedback.notificationOccurred(type);
+    } else {
+      WebApp.HapticFeedback.impactOccurred(type);
+    }
+  } catch {
+    // Haptic feedback not available
+  }
+}
+
+/**
+ * Set header color
+ */
+export function setHeaderColor(color: string): void {
+  try {
+    WebApp.setHeaderColor(color as `#${string}`);
+  } catch {
+    // Header color not available
+  }
+}
+
+/**
+ * Set background color
+ */
+export function setBackgroundColor(color: string): void {
+  try {
+    WebApp.setBackgroundColor(color as `#${string}`);
+  } catch {
+    // Background color not available
+  }
+}
+
+/**
+ * Disable closing confirmation
+ */
+export function disableClosingConfirmation(): void {
+  try {
+    WebApp.disableClosingConfirmation();
+  } catch {
+    // Not available
+  }
+}
+

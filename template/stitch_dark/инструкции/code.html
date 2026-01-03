@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Инструкции</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#1c2834", 
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        /* Smooth height transition for details */
+        details[open] summary ~ * {
+            animation: sweep .3s ease-in-out;
+        }
+
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col antialiased selection:bg-primary/30">
+<!-- Header -->
+<div class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors">
+<div class="flex items-center justify-between p-4 h-14">
+<button class="flex items-center justify-center text-primary active:opacity-70 transition-opacity">
+<span class="material-symbols-outlined text-[22px]">arrow_back_ios_new</span>
+<span class="text-primary text-[17px] font-normal leading-none ml-1">Назад</span>
+</button>
+<h2 class="text-gray-900 dark:text-white text-[17px] font-semibold leading-tight absolute left-1/2 -translate-x-1/2">Инструкции</h2>
+<div class="w-12"></div> <!-- Spacer for balance -->
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto no-scrollbar pb-24">
+<!-- Search Bar -->
+<div class="px-4 py-3">
+<div class="relative flex w-full items-center rounded-xl bg-gray-200/50 dark:bg-surface-dark group focus-within:ring-2 focus-within:ring-primary/50 transition-all overflow-hidden">
+<div class="flex items-center justify-center pl-3 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-transparent border-none py-2.5 pl-2 pr-4 text-[17px] text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-0" placeholder="Поиск по инструкциям..."/>
+</div>
+</div>
+<!-- Intro Text -->
+<div class="px-5 pb-4 pt-1">
+<p class="text-gray-600 dark:text-gray-300 text-[15px] font-normal leading-relaxed text-center">
+                База знаний для эффективного самоанализа. Здесь собраны советы, как вести записи и работать с эмоциями.
+            </p>
+</div>
+<!-- Instructions List (iOS Grouped Style) -->
+<div class="px-4 space-y-6">
+<!-- Group 1: Basics -->
+<div class="flex flex-col gap-px rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
+<!-- Item 1 -->
+<details class="group bg-surface-light dark:bg-surface-dark">
+<summary class="flex cursor-pointer items-center justify-between p-4 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-8 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 text-primary">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</div>
+<span class="text-gray-900 dark:text-white text-[16px] font-medium">Как создать новую запись</span>
+</div>
+<span class="material-symbols-outlined text-gray-400 group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</summary>
+<div class="px-4 pb-4 pt-0 pl-[52px]">
+<p class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">
+                            Нажмите на синюю кнопку <span class="font-bold text-primary">«+»</span> в главном меню. Откроется форма, где вы сможете подробно описать ситуацию, которая вас беспокоит.
+                        </p>
+</div>
+</details>
+<!-- Item 2 -->
+<details class="group bg-surface-light dark:bg-surface-dark">
+<summary class="flex cursor-pointer items-center justify-between p-4 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-8 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 text-primary">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</div>
+<span class="text-gray-900 dark:text-white text-[16px] font-medium">Что писать в описании</span>
+</div>
+<span class="material-symbols-outlined text-gray-400 group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</summary>
+<div class="px-4 pb-4 pt-0 pl-[52px]">
+<ul class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed list-disc list-outside ml-4 space-y-1">
+<li>Опишите ситуацию объективно (факты).</li>
+<li>Укажите ваши мысли в этот момент.</li>
+<li>Честно признайтесь в ощущениях в теле.</li>
+</ul>
+</div>
+</details>
+</div>
+<!-- Group 2: Advanced -->
+<div>
+<h3 class="px-4 pb-2 text-[13px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Функции</h3>
+<div class="flex flex-col gap-px rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
+<!-- Item 3 -->
+<details class="group bg-surface-light dark:bg-surface-dark">
+<summary class="flex cursor-pointer items-center justify-between p-4 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-8 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+</div>
+<span class="text-gray-900 dark:text-white text-[16px] font-medium">Анализ эмоций</span>
+</div>
+<span class="material-symbols-outlined text-gray-400 group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</summary>
+<div class="px-4 pb-4 pt-0 pl-[52px]">
+<p class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">
+                                Система автоматически анализирует текст записи и предлагает вероятные когнитивные искажения. Вы можете подтвердить их или отклонить.
+                            </p>
+</div>
+</details>
+<!-- Item 4 -->
+<details class="group bg-surface-light dark:bg-surface-dark">
+<summary class="flex cursor-pointer items-center justify-between p-4 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-8 rounded-lg bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-[20px]">label</span>
+</div>
+<span class="text-gray-900 dark:text-white text-[16px] font-medium">Использование тегов</span>
+</div>
+<span class="material-symbols-outlined text-gray-400 group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</summary>
+<div class="px-4 pb-4 pt-0 pl-[52px]">
+<p class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">
+                                Добавляйте теги для быстрой фильтрации записей. Например: #работа, #семья, #тревога.
+                            </p>
+</div>
+</details>
+</div>
+</div>
+<!-- Group 3: Privacy -->
+<div>
+<h3 class="px-4 pb-2 text-[13px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Безопасность</h3>
+<div class="flex flex-col gap-px rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
+<details class="group bg-surface-light dark:bg-surface-dark">
+<summary class="flex cursor-pointer items-center justify-between p-4 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-8 rounded-lg bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+<span class="text-gray-900 dark:text-white text-[16px] font-medium">Конфиденциальность</span>
+</div>
+<span class="material-symbols-outlined text-gray-400 group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</summary>
+<div class="px-4 pb-4 pt-0 pl-[52px]">
+<p class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">
+                                Ваши записи хранятся локально на устройстве и в зашифрованном облаке Telegram. Никто, кроме вас, не имеет к ним доступа.
+                            </p>
+</div>
+</details>
+</div>
+</div>
+<!-- Footer Info -->
+<div class="text-center pt-4 pb-8">
+<p class="text-gray-400 dark:text-gray-600 text-xs">Версия приложения 1.0.4</p>
+</div>
+</div>
+</main>
+<!-- Bottom Action Button -->
+<div class="fixed bottom-0 left-0 w-full p-4 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800">
+<button class="w-full flex items-center justify-center rounded-xl h-12 bg-primary active:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+<span class="text-white text-[17px] font-semibold tracking-wide">Всё понятно</span>
+</button>
+</div>
+</body></html>

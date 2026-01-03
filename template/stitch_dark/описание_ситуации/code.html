@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Описание Ситуации</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8", // Not used heavily as per design request for dark telegram style
+                        "background-dark": "#101922", // Main dark bg
+                        "surface-dark": "#192633", // Input fields
+                        "border-dark": "#324d67", // Borders
+                        "text-secondary": "#92adc9",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for textarea */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background-color: #324d67;
+            border-radius: 20px;
+        }
+        
+        /* Telegram Mini App specifics mimic */
+        body {
+            background-color: #101922; /* Fallback */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display text-white selection:bg-primary/30">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between border-b border-gray-200 dark:border-[#1e2a36]">
+<div class="flex w-12 items-center justify-start">
+<button class="text-primary text-base font-normal leading-normal tracking-[0.015em] shrink-0 active:opacity-70">
+                    Отмена
+                </button>
+</div>
+<h2 class="text-gray-900 dark:text-white text-[17px] font-semibold leading-tight flex-1 text-center">Ситуация</h2>
+<div class="flex w-12 items-center justify-end">
+<!-- Disabled state styling for initial view -->
+<button class="text-text-secondary text-base font-semibold leading-normal tracking-[0.015em] shrink-0 opacity-50 cursor-not-allowed">
+                    Далее
+                </button>
+</div>
+</header>
+<!-- PageIndicators -->
+<div class="flex w-full flex-row items-center justify-center gap-2 py-4 px-4">
+<div class="h-1 flex-1 rounded-full bg-primary"></div>
+<div class="h-1 flex-1 rounded-full bg-[#324d67] dark:bg-[#253646]"></div>
+<div class="h-1 flex-1 rounded-full bg-[#324d67] dark:bg-[#253646]"></div>
+<div class="h-1 flex-1 rounded-full bg-[#324d67] dark:bg-[#253646]"></div>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col px-4 pt-2 pb-6">
+<!-- TitleText -->
+<div class="flex items-start justify-between">
+<h1 class="text-gray-900 dark:text-white text-[28px] font-bold leading-tight tracking-[-0.015em] pb-2 pt-2">
+                    Что произошло?
+                </h1>
+<!-- Hint Button (Floating-like nearby title) -->
+<button aria-label="Как заполнять?" class="mt-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 text-primary hover:bg-primary/30 transition-colors">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+</div>
+<!-- BodyText (Helper prompt) -->
+<p class="text-gray-500 dark:text-text-secondary text-[15px] font-normal leading-snug pb-6">
+                Опишите факты, без эмоций и интерпретаций. Только то, что можно было бы записать на видеокамеру.
+            </p>
+<!-- TextField Area -->
+<div class="flex flex-col flex-1 relative group">
+<label class="sr-only" for="situation-desc">Описание ситуации</label>
+<div class="relative flex-1 flex flex-col">
+<textarea class="form-textarea flex w-full flex-1 resize-none rounded-xl text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-[#5e768e] bg-white dark:bg-surface-dark border border-gray-200 dark:border-border-dark focus:border-primary dark:focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none p-4 text-[17px] font-normal leading-relaxed transition-all ease-in-out duration-200" id="situation-desc" placeholder="Например: Начальник громко сказал, что отчет не готов, и бросил папку на стол..."></textarea>
+<!-- Character count or subtle indicator could go here -->
+<div class="absolute bottom-4 right-4 pointer-events-none">
+<span class="material-symbols-outlined text-gray-300 dark:text-[#324d67] text-2xl">edit_note</span>
+</div>
+</div>
+</div>
+<!-- Tip Card / Bottom Hint (Static version of what could be a modal/toast) -->
+<div class="mt-6 rounded-lg bg-primary/10 border border-primary/20 p-4 flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5">lightbulb</span>
+<div class="flex flex-col gap-1">
+<h4 class="text-sm font-semibold text-gray-900 dark:text-white">Совет</h4>
+<p class="text-sm text-gray-600 dark:text-text-secondary leading-normal">
+                        Избегайте слов "всегда", "никогда", "ужасно". Пишите конкретные действия людей или события.
+                    </p>
+</div>
+</div>
+</main>
+<!-- Floating Keyboard Accessory View Simulator (Sticky Bottom) -->
+<div class="sticky bottom-0 w-full bg-gray-100 dark:bg-[#1a2633] border-t border-gray-200 dark:border-[#324d67] p-2 flex justify-end items-center gap-2 transform translate-y-full has-[:focus-within]:translate-y-0 transition-transform duration-300 ease-out">
+<button class="h-10 px-4 rounded-lg text-sm font-medium text-gray-500 dark:text-text-secondary hover:bg-gray-200 dark:hover:bg-[#253646]">
+                Скрыть
+            </button>
+<button class="h-10 px-6 rounded-lg bg-primary text-white text-sm font-medium shadow-lg shadow-primary/30 active:scale-95 transition-all">
+                Готово
+            </button>
+</div>
+</div>
+</body></html>
