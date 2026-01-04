@@ -76,13 +76,13 @@ export default function Situation() {
         {/* Headline */}
         <div className="pt-2 pb-2">
           <h1 className="text-[28px] font-bold leading-tight tracking-tight text-slate-900 dark:text-white">
-            Что произошло?
+            Что происходит?
           </h1>
         </div>
 
         {/* Description */}
         <p className="text-base font-normal leading-relaxed text-slate-600 dark:text-slate-300 pb-6">
-          Опишите факты, без эмоций и интерпретаций. Только то, что можно было бы записать на видеокамеру.
+          Опишите факты. Это может быть ситуация, когда вы хотите что-то начать, но не можете, или вам стало плохо просто сидя дома за смартфоном.
         </p>
 
         {/* Text Input Area */}
@@ -115,7 +115,7 @@ export default function Situation() {
           <div className="mt-4 rounded-xl bg-white dark:bg-surface-dark p-4 shadow-lg border border-slate-200 dark:border-border-dark animate-fade-in">
             <h3 className="text-lg font-bold mb-3 text-slate-900 dark:text-white">Совет</h3>
             <p className="text-slate-600 dark:text-slate-300 mb-3 text-sm">
-              Избегайте слов "всегда", "никогда", "ужасно". Пишите конкретные действия людей или события.
+              Опишите внешние обстоятельства. Например: "Сижу на диване, смотрю в телефон, нужно встать и пойти готовить, но не могу".
             </p>
             <button
               onClick={() => setShowTip(false)}

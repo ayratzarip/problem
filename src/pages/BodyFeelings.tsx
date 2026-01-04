@@ -60,7 +60,7 @@ export default function BodyFeelings() {
 
         {/* Description */}
         <p className="text-base font-normal leading-relaxed text-slate-600 dark:text-slate-300 pb-6">
-          Где именно в теле живет эта эмоция? Опишите ощущения своими словами.
+          Оцените тонус мышц тела и лица, затем прислушайтесь к ощущениям внутри. Эмоции всегда отражаются в мышечном тонусе.
         </p>
 
         {/* Text Input Area */}
@@ -93,10 +93,10 @@ export default function BodyFeelings() {
           <div className="mt-4 rounded-xl bg-white dark:bg-surface-dark p-4 shadow-lg border border-slate-200 dark:border-border-dark animate-fade-in">
             <h3 className="text-lg font-bold mb-3 text-slate-900 dark:text-white">Как описать ощущения?</h3>
             <p className="text-slate-600 dark:text-slate-300 mb-3 text-sm">
-              Попробуйте сосредоточиться на физических параметрах:
+              Обратите внимание на напряжение в плечах, челюсти, лбу. Сжаты ли кулаки? Как дышится? Эмоции живут в теле.
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm text-slate-600 dark:text-slate-300">
-              <li>Температура (жар, холод)</li>
+              <li>Тонус (напряжение, расслабление)</li>
               <li>Текстура (колючее, мягкое)</li>
               <li>Движение (пульсация, вибрация)</li>
               <li>Вес (тяжесть, легкость)</li>

@@ -75,7 +75,7 @@ export default function WithoutProblem() {
 
         {/* Description */}
         <p className="text-base font-normal leading-relaxed text-slate-600 dark:text-slate-300 pb-6">
-          Представьте, что эта проблема исчезла. Как изменится ваш день? Куда вы направите освободившуюся энергию?
+          Проблема — это когда вы не делаете то, что хотите. Осознайте, что если бы не проблема, вы бы могли заняться чем-то ценным.
         </p>
 
         {/* Text Input Area */}
@@ -106,13 +106,10 @@ export default function WithoutProblem() {
         {/* Tip Modal */}
         {showTip && (
           <div className="mt-4 rounded-xl bg-white dark:bg-surface-dark p-4 shadow-lg border border-slate-200 dark:border-border-dark animate-fade-in">
-            <h3 className="text-lg font-bold mb-3 text-slate-900 dark:text-white">Наводящие вопросы</h3>
-            <ul className="list-disc pl-5 space-y-1 text-sm text-slate-600 dark:text-slate-300 mb-3">
-              <li>Как бы вы проводили свободное время?</li>
-              <li>Какие отношения бы улучшились?</li>
-              <li>Что бы вы начали делать, чего не делали раньше?</li>
-              <li>Как бы изменилось ваше настроение?</li>
-            </ul>
+            <h3 className="text-lg font-bold mb-3 text-slate-900 dark:text-white">Пример</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">
+              "Если бы я не тревожился эти два часа, я бы почитал книгу или спокойно погулял".
+            </p>
             <button
               onClick={() => setShowTip(false)}
               className="w-full py-2.5 rounded-lg bg-slate-200 dark:bg-surface-dark-alt font-medium text-slate-900 dark:text-white hover:bg-slate-300 dark:hover:bg-border-dark transition-colors"

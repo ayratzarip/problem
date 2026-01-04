@@ -60,7 +60,7 @@ export default function Consequences() {
 
         {/* Description */}
         <p className="text-base font-normal leading-relaxed text-slate-600 dark:text-slate-300 pb-6">
-          Опишите, какие ограничения, негативные эмоции или физические ощущения вызывает эта проблема в вашей повседневной жизни.
+          Помеха — это потеря времени (например, тревожился два часа) или препятствие к действию (хотел сесть за проект, но не смог).
         </p>
 
         {/* Text Input Area */}
@@ -93,10 +93,10 @@ export default function Consequences() {
           <div className="mt-4 rounded-xl bg-white dark:bg-surface-dark p-4 shadow-lg border border-slate-200 dark:border-border-dark animate-fade-in">
             <h3 className="text-lg font-bold mb-3 text-slate-900 dark:text-white">Примеры заполнения</h3>
             <ul className="list-disc pl-5 space-y-1 text-sm text-slate-600 dark:text-slate-300 mb-3">
-              <li>Я избегаю встреч с друзьями</li>
-              <li>Я плохо сплю из-за навязчивых мыслей</li>
-              <li>Я срываюсь на близких</li>
-              <li>Я чувствую постоянное напряжение в плечах</li>
+              <li>Потерял 2 часа на тревогу</li>
+              <li>Хотел пойти на встречу, но остался дома</li>
+              <li>Не смог сосредоточиться на работе</li>
+              <li>Сорвался на близких вместо разговора</li>
             </ul>
             <button
               onClick={() => setShowTip(false)}

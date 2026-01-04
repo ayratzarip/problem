@@ -16,31 +16,62 @@ const basicInstructions: InstructionItem[] = [
     icon: 'edit_note',
     iconColor: 'text-primary bg-blue-500/10 dark:bg-blue-500/20',
     title: 'Как создать новую запись',
-    content: 'Нажмите на синюю кнопку «+» в главном меню. Откроется форма, где вы сможете подробно описать ситуацию, которая вас беспокоит.',
+    content: 'Нажмите на синюю кнопку «Новая запись» внизу главного экрана. Последовательно заполните 5 шагов: Ситуация, Мысли, Тело, Последствия, Без проблемы. На каждом шаге есть подсказки и вопросы-помощники.',
   },
   {
-    id: 'describe',
-    icon: 'description',
-    iconColor: 'text-primary bg-blue-500/10 dark:bg-blue-500/20',
-    title: 'Что писать в описании',
-    content: 'Опишите ситуацию объективно (факты). Укажите ваши мысли в этот момент. Честно признайтесь в ощущениях в теле.',
+    id: 'edit',
+    icon: 'edit',
+    iconColor: 'text-orange-600 dark:text-orange-400 bg-orange-500/10 dark:bg-orange-500/20',
+    title: 'Как редактировать запись',
+    content: 'На главном экране нажмите на карточку записи, которую хотите изменить. Откроется окно редактирования, где вы сможете внести правки в любой раздел или изменить дату и время события. Не забудьте нажать "Сохранить изменения".',
   },
 ];
 
-const featureInstructions: InstructionItem[] = [
+const descriptionInstructions: InstructionItem[] = [
   {
-    id: 'emotions',
-    icon: 'psychology',
-    iconColor: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 dark:bg-purple-500/20',
-    title: 'Анализ эмоций',
-    content: 'Система автоматически анализирует текст записи и предлагает вероятные когнитивные искажения. Вы можете подтвердить их или отклонить.',
+    id: 'situation',
+    icon: 'info',
+    iconColor: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 dark:bg-blue-500/20',
+    title: '1. Ситуация (Что происходит?)',
+    content: 'Опишите факты: что произошло или что происходит прямо сейчас. Без эмоций, как если бы это снимала камера. Например: "Сижу на диване, не могу начать работать" или "Начальник повысил голос".',
   },
   {
-    id: 'tags',
-    icon: 'label',
+    id: 'thoughts',
+    icon: 'psychology',
+    iconColor: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 dark:bg-purple-500/20',
+    title: '2. Мысли (О чем думаю?)',
+    content: 'Запишите всё, что приходит в голову. Если сложно, представьте, что объясняете другу или что написано в облачке над вашей головой в комиксе.',
+  },
+  {
+    id: 'body',
+    icon: 'accessibility_new',
+    iconColor: 'text-red-600 dark:text-red-400 bg-red-500/10 dark:bg-red-500/20',
+    title: '3. Тело (Что ощущаю?)',
+    content: 'Оцените тонус мышц (напряжение/расслабление) в теле и лице. Затем прислушайтесь к ощущениям внутри (ком в горле, тяжесть в груди). Эмоции всегда отражаются в теле.',
+  },
+  {
+    id: 'consequences',
+    icon: 'warning',
+    iconColor: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 dark:bg-amber-500/20',
+    title: '4. Последствия (Как мешает?)',
+    content: 'Как эта проблема мешает жить? Это может быть потеря времени (2 часа тревоги) или препятствие к действию (хотел пойти, но остался дома).',
+  },
+  {
+    id: 'without',
+    icon: 'sentiment_satisfied',
     iconColor: 'text-green-600 dark:text-green-400 bg-green-500/10 dark:bg-green-500/20',
-    title: 'Использование тегов',
-    content: 'Добавляйте теги для быстрой фильтрации записей. Например: #работа, #семья, #тревога.',
+    title: '5. Без проблемы',
+    content: 'Представьте, что проблемы нет. Что бы вы делали? Это помогает осознать ценность изменений. Например: "Если бы не тревога, я бы почитал книгу".',
+  },
+];
+
+const aiInstructions: InstructionItem[] = [
+  {
+    id: 'ai',
+    icon: 'smart_toy',
+    iconColor: 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 dark:bg-indigo-500/20',
+    title: 'Как работать с AI',
+    content: 'На главном экране нажмите кнопку "Скопировать для AI" (доступна, если есть записи). Ваш журнал будет скопирован в буфер обмена в специальном формате с промптом для нейросети. Вставьте этот текст в чат с любым AI (ChatGPT, Claude, и т.д.) для получения анализа и рекомендаций.',
   },
 ];
 
@@ -48,9 +79,9 @@ const securityInstructions: InstructionItem[] = [
   {
     id: 'privacy',
     icon: 'lock',
-    iconColor: 'text-orange-600 dark:text-orange-400 bg-orange-500/10 dark:bg-orange-500/20',
+    iconColor: 'text-slate-600 dark:text-slate-400 bg-slate-500/10 dark:bg-slate-500/20',
     title: 'Конфиденциальность',
-    content: 'Ваши записи хранятся локально на устройстве и в зашифрованном облаке Telegram. Никто, кроме вас, не имеет к ним доступа.',
+    content: 'Мы серьезно относимся к безопасности ваших данных. Все записи хранятся локально на вашем устройстве и в зашифрованном облаке Telegram Cloud Storage. Приложение не передает данные на сторонние серверы. Никто, кроме вас, не имеет доступа к вашему дневнику.',
   },
 ];
 
@@ -160,17 +191,11 @@ export default function Instructions() {
           </div>
         </div>
 
-        {/* Intro Text */}
-        <div className="px-5 pb-4 pt-1">
-          <p className="text-slate-600 dark:text-slate-300 text-[15px] font-normal leading-relaxed text-center">
-            База знаний для эффективного самоанализа. Здесь собраны советы, как вести записи и работать с эмоциями.
-          </p>
-        </div>
-
         {/* Instructions Lists */}
-        <div className="px-4 space-y-6">
+        <div className="px-4 space-y-6 pt-4">
           <InstructionGroup items={basicInstructions} />
-          <InstructionGroup title="Функции" items={featureInstructions} />
+          <InstructionGroup title="Что писать в описании" items={descriptionInstructions} />
+          <InstructionGroup items={aiInstructions} />
           <InstructionGroup title="Безопасность" items={securityInstructions} />
 
           {/* Footer */}

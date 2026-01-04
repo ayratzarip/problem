@@ -95,7 +95,9 @@ export default function Thoughts() {
           <div className="mt-4 rounded-xl bg-white dark:bg-surface-dark p-4 shadow-lg border border-slate-200 dark:border-border-dark animate-fade-in">
             <h3 className="text-lg font-bold mb-3 text-slate-900 dark:text-white">Как описать мысли?</h3>
             <p className="text-slate-600 dark:text-slate-300 mb-3 text-sm">
-              Не оценивайте свои мысли как «плохие» или «хорошие». Просто наблюдайте за ними. Используйте формулировки «Я чувствую...», «Меня беспокоит...».
+              Если трудно осознать мысли:
+              <br/>1. Представьте, что объясняете другу причину своего состояния.
+              <br/>2. Представьте себя героем комикса — что написано в "облачке" над вашей головой?
             </p>
             <button
               onClick={() => setShowTip(false)}
