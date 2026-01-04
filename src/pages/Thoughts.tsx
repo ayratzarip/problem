@@ -30,11 +30,11 @@ export default function Thoughts() {
     <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col">
       {/* Header */}
       <header className="flex items-center justify-between p-4 pb-2 sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
-        <button 
+        <button
           onClick={handleBack}
-          className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+          className="flex size-10 items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-surface-dark transition-colors"
         >
-          <span className="material-symbols-outlined text-[24px]">arrow_back</span>
+          <span className="material-symbols-outlined text-[24px] text-slate-900 dark:text-white">arrow_back</span>
         </button>
         <h2 className="text-lg font-bold leading-tight tracking-tight text-center text-slate-900 dark:text-white">
           Шаг 2
@@ -79,12 +79,12 @@ export default function Thoughts() {
             />
             {/* Helper Button */}
             <div className="absolute bottom-4 right-4 z-10">
-              <button 
+              <button
                 onClick={() => { setShowTip(!showTip); hapticFeedback('light'); }}
-                className="flex items-center gap-1.5 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-full backdrop-blur-md transition-colors border border-primary/10"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-medium text-sm transition-colors"
               >
                 <span className="material-symbols-outlined text-[18px]">help</span>
-                <span className="text-xs font-semibold">Подсказка</span>
+                <span>Подсказка</span>
               </button>
             </div>
           </div>
@@ -97,9 +97,9 @@ export default function Thoughts() {
             <p className="text-slate-600 dark:text-slate-300 mb-3 text-sm">
               Не оценивайте свои мысли как «плохие» или «хорошие». Просто наблюдайте за ними. Используйте формулировки «Я чувствую...», «Меня беспокоит...».
             </p>
-            <button 
+            <button
               onClick={() => setShowTip(false)}
-              className="w-full mt-4 bg-slate-200 dark:bg-border-dark py-2.5 rounded-lg font-medium text-slate-800 dark:text-white"
+              className="w-full py-2.5 rounded-lg bg-slate-200 dark:bg-surface-dark-alt font-medium text-slate-900 dark:text-white hover:bg-slate-300 dark:hover:bg-border-dark transition-colors"
             >
               Понятно
             </button>
@@ -110,9 +110,9 @@ export default function Thoughts() {
       {/* Bottom Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-30 p-4 bg-linear-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark dark:to-transparent pt-12">
         <div className="flex gap-4 max-w-lg mx-auto w-full">
-          <button 
+          <button
             onClick={handleNext}
-            className="h-12 flex-1 rounded-xl bg-primary text-white font-semibold text-base shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+            className="h-12 w-full rounded-xl bg-primary text-white font-semibold text-base shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
           >
             Далее
             <span className="material-symbols-outlined text-[20px]">arrow_forward</span>

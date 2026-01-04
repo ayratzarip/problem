@@ -129,12 +129,11 @@ export default function Instructions() {
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-slate-200 dark:border-gray-800 transition-colors">
         <div className="flex items-center justify-between p-4 h-14">
-          <button 
+          <button
             onClick={handleBack}
-            className="flex items-center justify-center text-primary active:opacity-70 transition-opacity"
+            className="flex size-10 items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-surface-dark transition-colors"
           >
-            <span className="material-symbols-outlined text-[22px]">arrow_back_ios_new</span>
-            <span className="text-primary text-[17px] font-normal leading-none ml-1">Назад</span>
+            <span className="material-symbols-outlined text-[24px] text-slate-900 dark:text-white">arrow_back</span>
           </button>
           <h2 className="text-slate-900 dark:text-white text-[17px] font-semibold leading-tight absolute left-1/2 -translate-x-1/2">
             Инструкции
@@ -183,11 +182,11 @@ export default function Instructions() {
 
       {/* Bottom Button */}
       <div className="fixed bottom-0 left-0 w-full p-4 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-slate-200 dark:border-gray-800">
-        <button 
+        <button
           onClick={handleUnderstood}
-          className="w-full flex items-center justify-center rounded-xl h-12 bg-primary active:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
+          className="h-12 w-full rounded-xl bg-primary text-white font-semibold text-base shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.98] flex items-center justify-center"
         >
-          <span className="text-white text-[17px] font-semibold tracking-wide">Всё понятно</span>
+          Всё понятно
         </button>
       </div>
     </div>

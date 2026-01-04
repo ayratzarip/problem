@@ -28,19 +28,6 @@ function formatTime(dateString: string): string {
   return date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
 }
 
-function getEmojiBackground(emoji: string): string {
-  const emojiColors: Record<string, string> = {
-    '😰': 'bg-orange-100 dark:bg-orange-500/20',
-    '😨': 'bg-purple-100 dark:bg-purple-500/20',
-    '😔': 'bg-blue-100 dark:bg-blue-500/20',
-    '😌': 'bg-green-100 dark:bg-green-500/20',
-    '😤': 'bg-red-100 dark:bg-red-500/20',
-    '😢': 'bg-indigo-100 dark:bg-indigo-500/20',
-    '😊': 'bg-yellow-100 dark:bg-yellow-500/20',
-    '🤔': 'bg-cyan-100 dark:bg-cyan-500/20',
-  };
-  return emojiColors[emoji] || 'bg-gray-100 dark:bg-gray-500/20';
-}
 
 interface GroupedEntries {
   date: string;
@@ -148,7 +135,9 @@ export default function Home() {
       <main className="flex-1 overflow-y-auto no-scrollbar px-4 pb-32">
         {entries.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 text-center">
-            <div className="text-6xl mb-4">📝</div>
+            <div className="flex items-center justify-center size-20 rounded-full bg-slate-200 dark:bg-surface-dark mb-4">
+              <span className="material-symbols-outlined text-[40px] text-slate-400 dark:text-slate-500">edit_note</span>
+            </div>
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
               Пока записей нет
             </h2>
@@ -158,7 +147,9 @@ export default function Home() {
           </div>
         ) : filteredEntries.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 text-center">
-            <div className="text-6xl mb-4">🔍</div>
+            <div className="flex items-center justify-center size-20 rounded-full bg-slate-200 dark:bg-surface-dark mb-4">
+              <span className="material-symbols-outlined text-[40px] text-slate-400 dark:text-slate-500">search_off</span>
+            </div>
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
               Ничего не найдено
             </h2>
@@ -186,13 +177,6 @@ export default function Home() {
                   >
                     <div className="absolute inset-0 bg-primary/5 dark:bg-primary/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="relative flex gap-4 bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-slate-100 dark:border-transparent">
-                      {/* Emoji */}
-                      <div className="flex flex-col items-center gap-1 shrink-0">
-                        <div className={`flex items-center justify-center rounded-full size-12 text-2xl ${getEmojiBackground(entry.emoji)}`}>
-                          {entry.emoji}
-                        </div>
-                      </div>
-                      
                       {/* Content */}
                       <div className="flex flex-1 flex-col min-w-0">
                         <div className="flex justify-between items-start mb-1">
@@ -244,20 +228,13 @@ export default function Home() {
 
       {/* Floating Bottom Actions */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-linear-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark pt-12 pb-6 z-30">
-        <div className="flex flex-col gap-3 max-w-lg mx-auto w-full">
-          <button 
+        <div className="max-w-lg mx-auto w-full">
+          <button
             onClick={handleNewEntry}
-            className="h-12 flex-1 rounded-xl bg-primary text-white font-semibold text-base shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+            className="h-12 w-full rounded-xl bg-primary text-white font-semibold text-base shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
           >
             Новая запись
             <span className="material-symbols-outlined text-[20px]">add</span>
-          </button>
-          <button 
-            onClick={handleOpenInstructions}
-            className="flex items-center justify-center w-full bg-transparent hover:bg-slate-200 dark:hover:bg-surface-dark text-slate-600 dark:text-text-secondary font-medium h-10 rounded-lg transition-colors gap-2 text-sm"
-          >
-            <span className="material-symbols-outlined text-lg">menu_book</span>
-            <span>Как это работает?</span>
           </button>
         </div>
       </div>
