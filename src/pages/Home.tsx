@@ -88,10 +88,15 @@ export default function Home() {
     navigate('/instructions');
   };
 
+  const handleOpenEntry = (id: string) => {
+    hapticFeedback('light');
+    navigate(`/entry/${id}`);
+  };
+
   const handleDeleteEntry = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     hapticFeedback('medium');
-    
+
     const confirmed = await showConfirm('Удалить эту запись?');
     if (confirmed) {
       await deleteEntry(id);
@@ -174,9 +179,10 @@ export default function Home() {
                 
                 {/* Entries */}
                 {group.entries.map(entry => (
-                  <article 
+                  <article
                     key={entry.id}
-                    className="relative group active:scale-[0.98] transition-transform duration-100 mb-3"
+                    onClick={() => handleOpenEntry(entry.id)}
+                    className="relative group active:scale-[0.98] transition-transform duration-100 mb-3 cursor-pointer"
                   >
                     <div className="absolute inset-0 bg-primary/5 dark:bg-primary/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="relative flex gap-4 bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-slate-100 dark:border-transparent">

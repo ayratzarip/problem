@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import type { Entry, NewEntry, Theme, AppContextType } from '../types';
 import { INITIAL_ENTRY } from '../types';
-import { 
-  getEntries, 
-  addEntry, 
+import {
+  getEntries,
+  addEntry,
   deleteEntry as deleteStorageEntry,
+  updateEntry as updateStorageEntry,
   generateTitle,
   getEmoji,
   extractTags
@@ -18,6 +19,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [currentEntry, setCurrentEntry] = useState<NewEntry>(INITIAL_ENTRY);
   const [isLoading, setIsLoading] = useState(true);
   const [theme, setTheme] = useState<Theme>('dark');
+  const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
 
   // Initialize Telegram WebApp and load entries
   useEffect(() => {
@@ -100,19 +102,66 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const resetCurrentEntry = useCallback(() => {
     setCurrentEntry(INITIAL_ENTRY);
+    setEditingEntryId(null);
   }, []);
+
+  const loadEntryForEditing = useCallback((id: string) => {
+    const entry = entries.find(e => e.id === id);
+    if (entry) {
+      setCurrentEntry({
+        situation: entry.situation,
+        thoughts: entry.thoughts,
+        bodyFeelings: entry.bodyFeelings,
+        bodyZones: entry.bodyZones,
+        consequences: entry.consequences,
+        withoutProblem: entry.withoutProblem,
+      });
+      setEditingEntryId(id);
+    }
+  }, [entries]);
+
+  const updateExistingEntry = useCallback(async () => {
+    if (!editingEntryId) {
+      throw new Error('No entry is being edited');
+    }
+
+    try {
+      const combinedText = `${currentEntry.situation} ${currentEntry.thoughts} ${currentEntry.consequences}`;
+
+      const updated = await updateStorageEntry(editingEntryId, {
+        ...currentEntry,
+        title: generateTitle(currentEntry.situation),
+        emoji: getEmoji(combinedText),
+        tags: extractTags(combinedText),
+      });
+
+      if (updated) {
+        setEntries(prev => prev.map(e => e.id === editingEntryId ? updated : e));
+        setCurrentEntry(INITIAL_ENTRY);
+        setEditingEntryId(null);
+        hapticFeedback('success');
+      }
+    } catch (error) {
+      console.error('Failed to update entry:', error);
+      hapticFeedback('error');
+      throw error;
+    }
+  }, [editingEntryId, currentEntry]);
 
   const value: AppContextType = {
     entries,
     currentEntry,
     isLoading,
     theme,
+    editingEntryId,
     setCurrentEntry,
     updateCurrentEntry,
     saveEntry,
     deleteEntry,
     loadEntries,
     resetCurrentEntry,
+    loadEntryForEditing,
+    updateExistingEntry,
   };
 
   return (

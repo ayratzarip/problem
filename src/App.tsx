@@ -8,6 +8,7 @@ import {
   Consequences,
   WithoutProblem,
   Instructions,
+  EntryView,
 } from './pages';
 
 function App() {
@@ -18,23 +19,26 @@ function App() {
           <Routes>
             {/* 1. Мои записи - Домашняя страница */}
             <Route path="/" element={<Home />} />
-            
-            {/* 2. Описание ситуации */}
+
+            {/* 2. Просмотр/редактирование записи */}
+            <Route path="/entry/:id" element={<EntryView />} />
+
+            {/* 3. Описание ситуации */}
             <Route path="/situation" element={<Situation />} />
-            
-            {/* 3. О чем думаю */}
+
+            {/* 4. О чем думаю */}
             <Route path="/thoughts" element={<Thoughts />} />
-            
-            {/* 4. Что ощущаю в теле */}
+
+            {/* 5. Что ощущаю в теле */}
             <Route path="/body-feelings" element={<BodyFeelings />} />
-            
-            {/* 5. Как это мешает жить? */}
+
+            {/* 6. Как это мешает жить? */}
             <Route path="/consequences" element={<Consequences />} />
-            
-            {/* 6. Что бы я делал без проблемы? */}
+
+            {/* 7. Что бы я делал без проблемы? */}
             <Route path="/without-problem" element={<WithoutProblem />} />
-            
-            {/* 7. Инструкции */}
+
+            {/* 8. Инструкции */}
             <Route path="/instructions" element={<Instructions />} />
           </Routes>
         </div>

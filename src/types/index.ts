@@ -29,12 +29,15 @@ export interface AppContextType {
   currentEntry: NewEntry;
   isLoading: boolean;
   theme: Theme;
+  editingEntryId: string | null;
   setCurrentEntry: (entry: NewEntry) => void;
   updateCurrentEntry: <K extends keyof NewEntry>(key: K, value: NewEntry[K]) => void;
   saveEntry: () => Promise<void>;
   deleteEntry: (id: string) => Promise<void>;
   loadEntries: () => Promise<void>;
   resetCurrentEntry: () => void;
+  loadEntryForEditing: (id: string) => void;
+  updateExistingEntry: () => Promise<void>;
 }
 
 export const EMOJIS = ['😰', '😨', '😔', '😌', '😤', '😢', '😊', '🤔'];
