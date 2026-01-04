@@ -24,7 +24,6 @@ export default function Thoughts() {
     navigate('/body-feelings');
   };
 
-  const charCount = currentEntry.thoughts.length;
   const maxChars = 1000;
 
   return (

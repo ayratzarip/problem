@@ -13,7 +13,7 @@ import {
 function App() {
   return (
     <AppProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/problem">
         <div className="min-h-screen bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
           <Routes>
             {/* 1. Мои записи - Домашняя страница */}

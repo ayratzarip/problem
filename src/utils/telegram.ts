@@ -2,6 +2,23 @@ import WebApp from '@twa-dev/sdk';
 import type { Theme } from '../types';
 
 /**
+ * Check if app is running inside Telegram
+ */
+export function isTelegramEnvironment(): boolean {
+  try {
+    // Check if WebApp is available and properly initialized
+    return !!(
+      WebApp &&
+      WebApp.initData &&
+      WebApp.initDataUnsafe &&
+      WebApp.initDataUnsafe.user
+    );
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Initialize Telegram WebApp
  */
 export function initTelegram(): void {
