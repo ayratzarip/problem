@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { hapticFeedback, showConfirm } from '../utils/telegram';
+import { hapticFeedback, showConfirm, showAlert } from '../utils/telegram';
 import type { Entry } from '../types';
 
 function formatDate(dateString: string): string {
@@ -90,6 +90,64 @@ export default function Home() {
     }
   };
 
+  const formatEntryForAI = (entry: Entry, index: number): string => {
+    return `Запись #${index + 1} (${formatDate(entry.createdAt)})
+Название: ${entry.title || 'Без названия'}
+
+1. Ситуация (что произошло):
+${entry.situation || 'Не указано'}
+
+2. Мысли (о чем думаю):
+${entry.thoughts || 'Не указано'}
+
+3. Телесные ощущения:
+${entry.bodyFeelings || 'Не указано'}
+${entry.bodyZones.length > 0 ? `Области тела: ${entry.bodyZones.join(', ')}` : ''}
+
+4. Последствия (как это мешает жить):
+${entry.consequences || 'Не указано'}
+
+5. Без проблемы (что бы я делал):
+${entry.withoutProblem || 'Не указано'}
+
+${entry.tags.length > 0 ? `Теги: ${entry.tags.join(', ')}` : ''}
+---
+`;
+  };
+
+  const handleCopyToAI = async () => {
+    if (entries.length === 0) {
+      await showAlert('У вас пока нет записей для анализа');
+      return;
+    }
+
+    hapticFeedback('light');
+
+    const prompt = `Ты - опытный психолог и специалист по когнитивно-поведенческой терапии. Проанализируй следующие записи из дневника самоанализа пользователя.
+
+Для каждой записи:
+1. Определи основные паттерны мышления (когнитивные искажения)
+2. Выяви связь между мыслями, эмоциями и поведением
+3. Предложи конкретные техники КПТ для работы с выявленными проблемами
+4. Дай рекомендации по изменению деструктивных паттернов мышления
+
+Записи:
+
+${entries.map((entry, index) => formatEntryForAI(entry, index)).join('\n')}
+
+Пожалуйста, проведи анализ и дай структурированные рекомендации.`;
+
+    try {
+      await navigator.clipboard.writeText(prompt);
+      hapticFeedback('success');
+      await showAlert('Запрос скопирован в буфер обмена! Вставьте его в чат с AI.');
+    } catch (error) {
+      console.error('Failed to copy to clipboard:', error);
+      hapticFeedback('error');
+      await showAlert('Не удалось скопировать. Попробуйте еще раз.');
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen bg-background-light dark:bg-background-dark">
@@ -110,7 +168,7 @@ export default function Home() {
             onClick={handleOpenInstructions}
             className="flex items-center justify-center size-10 rounded-full hover:bg-slate-200 dark:hover:bg-surface-dark transition-colors text-slate-900 dark:text-white"
           >
-            <span className="material-symbols-outlined text-[28px]">settings</span>
+            <span className="material-symbols-outlined text-[28px]">help</span>
           </button>
         </div>
         
@@ -228,7 +286,7 @@ export default function Home() {
 
       {/* Floating Bottom Actions */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-linear-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark pt-12 pb-6 z-30">
-        <div className="max-w-lg mx-auto w-full">
+        <div className="max-w-lg mx-auto w-full flex flex-col gap-3">
           <button
             onClick={handleNewEntry}
             className="h-12 w-full rounded-xl bg-primary text-white font-semibold text-base shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
@@ -236,6 +294,15 @@ export default function Home() {
             Новая запись
             <span className="material-symbols-outlined text-[20px]">add</span>
           </button>
+          {entries.length > 0 && (
+            <button
+              onClick={handleCopyToAI}
+              className="h-12 w-full rounded-xl bg-slate-200 dark:bg-surface-dark text-slate-900 dark:text-white font-semibold text-base hover:bg-slate-300 dark:hover:bg-surface-dark-alt transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+            >
+              Скопировать для AI
+              <span className="material-symbols-outlined text-[20px]">content_copy</span>
+            </button>
+          )}
         </div>
       </div>
     </div>
