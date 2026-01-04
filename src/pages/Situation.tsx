@@ -9,7 +9,7 @@ export default function Situation() {
   const [showTip, setShowTip] = useState(false);
 
   useEffect(() => {
-    setupBackButton(async () => {
+    const cleanup = setupBackButton(async () => {
       if (currentEntry.situation.trim()) {
         const confirmed = await showConfirm('Отменить создание записи?');
         if (confirmed) {
@@ -20,6 +20,7 @@ export default function Situation() {
         navigate('/');
       }
     });
+    return cleanup;
   }, [navigate, currentEntry.situation, resetCurrentEntry]);
 
   const handleCancel = async () => {

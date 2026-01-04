@@ -10,9 +10,10 @@ export default function WithoutProblem() {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    setupBackButton(() => {
+    const cleanup = setupBackButton(() => {
       navigate('/consequences');
     });
+    return cleanup;
   }, [navigate]);
 
   const handleBack = () => {

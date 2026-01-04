@@ -39,7 +39,7 @@ export default function EntryView() {
   }, [currentEntry, entryDateTime, editingEntryId]);
 
   useEffect(() => {
-    setupBackButton(async () => {
+    const cleanup = setupBackButton(async () => {
       if (hasChanges) {
         const confirmed = await showConfirm('Выйти без сохранения изменений?');
         if (confirmed) {
@@ -51,6 +51,7 @@ export default function EntryView() {
         navigate('/');
       }
     });
+    return cleanup;
   }, [navigate, hasChanges, resetCurrentEntry]);
 
   const handleBack = async () => {

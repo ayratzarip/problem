@@ -1,7 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { hapticFeedback, showConfirm, showAlert } from '../utils/telegram';
+import { hapticFeedback, showConfirm, showAlert, hideBackButton } from '../utils/telegram';
 import type { Entry } from '../types';
 
 function formatDate(dateString: string): string {
@@ -38,6 +38,11 @@ export default function Home() {
   const { entries, isLoading, deleteEntry } = useApp();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Hide back button on home page
+  useEffect(() => {
+    hideBackButton();
+  }, []);
 
   const filteredEntries = useMemo(() => {
     if (!searchQuery.trim()) return entries;

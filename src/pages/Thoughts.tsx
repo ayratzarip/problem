@@ -9,9 +9,10 @@ export default function Thoughts() {
   const [showTip, setShowTip] = useState(false);
 
   useEffect(() => {
-    setupBackButton(() => {
+    const cleanup = setupBackButton(() => {
       navigate('/situation');
     });
+    return cleanup;
   }, [navigate]);
 
   const handleBack = () => {

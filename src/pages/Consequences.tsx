@@ -9,9 +9,10 @@ export default function Consequences() {
   const [showTip, setShowTip] = useState(false);
 
   useEffect(() => {
-    setupBackButton(() => {
+    const cleanup = setupBackButton(() => {
       navigate('/body-feelings');
     });
+    return cleanup;
   }, [navigate]);
 
   const handleBack = () => {

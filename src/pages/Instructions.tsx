@@ -140,9 +140,10 @@ export default function Instructions() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    setupBackButton(() => {
+    const cleanup = setupBackButton(() => {
       navigate('/');
     });
+    return cleanup;
   }, [navigate]);
 
   const handleBack = () => {

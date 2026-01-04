@@ -46,13 +46,33 @@ export function getTelegramTheme(): Theme {
 
 /**
  * Setup back button handler
+ * Returns a cleanup function to remove the handler
  */
-export function setupBackButton(callback: () => void): void {
+export function setupBackButton(callback: () => void | Promise<void>): () => void {
   try {
     WebApp.BackButton.show();
-    WebApp.BackButton.onClick(callback);
+    // Wrap callback to handle async properly
+    const wrappedCallback = () => {
+      const result = callback();
+      // If callback is async, handle it
+      if (result instanceof Promise) {
+        result.catch((error) => {
+          console.error('Back button callback error:', error);
+        });
+      }
+    };
+    WebApp.BackButton.onClick(wrappedCallback);
+    // Return cleanup function
+    return () => {
+      try {
+        WebApp.BackButton.hide();
+      } catch {
+        // Ignore errors on cleanup
+      }
+    };
   } catch {
     // BackButton not available outside Telegram
+    return () => {}; // Return no-op cleanup
   }
 }
 
