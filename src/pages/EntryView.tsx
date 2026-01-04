@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { setupBackButton, hapticFeedback, showConfirm } from '../utils/telegram';
-import { BODY_ZONES } from '../types';
 
 export default function EntryView() {
   const { id } = useParams<{ id: string }>();
   const { entries, currentEntry, updateCurrentEntry, loadEntryForEditing, updateExistingEntry, resetCurrentEntry, editingEntryId } = useApp();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'situation' | 'thoughts' | 'body' | 'consequences' | 'withoutProblem'>('situation');
   const [hasChanges, setHasChanges] = useState(false);
+  const [entryDateTime, setEntryDateTime] = useState('');
 
   useEffect(() => {
     if (id && !editingEntryId) {
@@ -19,9 +18,25 @@ export default function EntryView() {
 
   useEffect(() => {
     if (editingEntryId) {
+      const entry = entries.find(e => e.id === editingEntryId);
+      if (entry) {
+        // Форматируем дату для input[type="datetime-local"]
+        const date = new Date(entry.createdAt);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        setEntryDateTime(`${year}-${month}-${day}T${hours}:${minutes}`);
+      }
+    }
+  }, [editingEntryId, entries]);
+
+  useEffect(() => {
+    if (editingEntryId) {
       setHasChanges(true);
     }
-  }, [currentEntry, editingEntryId]);
+  }, [currentEntry, entryDateTime, editingEntryId]);
 
   useEffect(() => {
     setupBackButton(async () => {
@@ -55,19 +70,26 @@ export default function EntryView() {
   const handleSave = async () => {
     hapticFeedback('medium');
     try {
-      await updateExistingEntry();
+      // Обновляем createdAt, если изменилась дата
+      if (entryDateTime && editingEntryId) {
+        const newDate = new Date(entryDateTime);
+        const entry = entries.find(e => e.id === editingEntryId);
+        if (entry && newDate.toISOString() !== entry.createdAt) {
+          await updateExistingEntry(newDate.toISOString());
+        } else {
+          await updateExistingEntry();
+        }
+      } else {
+        await updateExistingEntry();
+      }
       navigate('/');
     } catch (error) {
       console.error('Failed to save:', error);
     }
   };
 
-  const handleZoneToggle = (zone: string) => {
-    hapticFeedback('light');
-    const newZones = currentEntry.bodyZones.includes(zone)
-      ? currentEntry.bodyZones.filter(z => z !== zone)
-      : [...currentEntry.bodyZones, zone];
-    updateCurrentEntry('bodyZones', newZones);
+  const handleDateTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEntryDateTime(e.target.value);
   };
 
   const entry = entries.find(e => e.id === id);
@@ -89,14 +111,6 @@ export default function EntryView() {
     );
   }
 
-  const tabs = [
-    { id: 'situation' as const, label: 'Ситуация', icon: 'description' },
-    { id: 'thoughts' as const, label: 'Мысли', icon: 'psychology' },
-    { id: 'body' as const, label: 'Тело', icon: 'accessibility' },
-    { id: 'consequences' as const, label: 'Последствия', icon: 'crisis_alert' },
-    { id: 'withoutProblem' as const, label: 'Без проблемы', icon: 'sentiment_satisfied' },
-  ];
-
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col">
       {/* Header */}
@@ -108,130 +122,120 @@ export default function EntryView() {
           <span className="material-symbols-outlined text-[24px] text-slate-900 dark:text-white">arrow_back</span>
         </button>
         <h2 className="text-lg font-bold leading-tight tracking-tight text-center text-slate-900 dark:text-white truncate max-w-[200px]">
-          {entry?.title || 'Редактирование'}
+          Редактирование
         </h2>
         <div className="size-10" />
       </header>
 
-      {/* Tabs */}
-      <div className="flex overflow-x-auto no-scrollbar gap-2 px-4 py-3 border-b border-slate-200 dark:border-border-dark">
-        {tabs.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => { setActiveTab(tab.id); hapticFeedback('light'); }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all ${
-              activeTab === tab.id
-                ? 'bg-primary text-white shadow-sm'
-                : 'bg-white dark:bg-surface-dark text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-surface-dark/70'
-            }`}
-          >
-            <span className="material-symbols-outlined text-[18px]">{tab.icon}</span>
-            <span className="text-sm font-medium">{tab.label}</span>
-          </button>
-        ))}
-      </div>
-
       {/* Main Content */}
       <main className="flex-1 flex flex-col px-4 pb-32 pt-4">
-        {activeTab === 'situation' && (
-          <div className="space-y-4">
-            <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2 block">
-                Описание ситуации
-              </label>
-              <textarea
-                value={currentEntry.situation}
-                onChange={(e) => updateCurrentEntry('situation', e.target.value)}
-                className="w-full min-h-[200px] p-4 rounded-xl bg-white dark:bg-surface-dark border-2 border-transparent focus:border-primary/50 focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-all shadow-sm"
-                placeholder="Опишите факты, без эмоций и интерпретаций..."
-              />
+        <div className="space-y-0 rounded-xl overflow-hidden border border-slate-200 dark:border-border-dark bg-white dark:bg-surface-dark">
+          {/* Дата и Время */}
+          <div className="bg-slate-50 dark:bg-surface-dark-alt px-4 py-3 border-b border-slate-200 dark:border-border-dark">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              Дата и Время
             </div>
           </div>
-        )}
+          <div className="bg-white dark:bg-surface-dark px-4 py-4 border-b border-slate-100 dark:border-border-dark">
+            <input
+              type="datetime-local"
+              value={entryDateTime}
+              onChange={handleDateTimeChange}
+              className="w-full bg-transparent text-base text-slate-900 dark:text-white border-none outline-none focus:ring-0 p-0"
+            />
+          </div>
 
-        {activeTab === 'thoughts' && (
-          <div className="space-y-4">
-            <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2 block">
-                О чём думаю
-              </label>
-              <textarea
-                value={currentEntry.thoughts}
-                onChange={(e) => updateCurrentEntry('thoughts', e.target.value)}
-                className="w-full min-h-[200px] p-4 rounded-xl bg-white dark:bg-surface-dark border-2 border-transparent focus:border-primary/50 focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-all shadow-sm"
-                placeholder="Какие мысли крутятся в голове..."
-              />
+          {/* Ситуация */}
+          <div className="bg-slate-50 dark:bg-surface-dark-alt px-4 py-3 border-b border-slate-200 dark:border-border-dark">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              Ситуация
             </div>
           </div>
-        )}
+          <div className="bg-white dark:bg-surface-dark px-4 py-4 border-b border-slate-100 dark:border-border-dark">
+            <textarea
+              value={currentEntry.situation}
+              onChange={(e) => updateCurrentEntry('situation', e.target.value)}
+              className="w-full min-h-[100px] bg-transparent text-base text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none border-none outline-none focus:ring-0 p-0"
+              placeholder="Опишите ситуацию..."
+            />
+          </div>
 
-        {activeTab === 'body' && (
-          <div className="space-y-4">
-            <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2 block">
-                Ощущения в теле
-              </label>
-              <textarea
-                value={currentEntry.bodyFeelings}
-                onChange={(e) => updateCurrentEntry('bodyFeelings', e.target.value)}
-                className="w-full min-h-[150px] p-4 rounded-xl bg-white dark:bg-surface-dark border-2 border-transparent focus:border-primary/50 focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-all shadow-sm"
-                placeholder="Опишите физические ощущения..."
-              />
+          {/* Мысли */}
+          <div className="bg-slate-50 dark:bg-surface-dark-alt px-4 py-3 border-b border-slate-200 dark:border-border-dark">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              Мысли
             </div>
-            <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 block">
-                Части тела
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                {BODY_ZONES.map(zone => (
-                  <button
-                    key={zone}
-                    onClick={() => handleZoneToggle(zone)}
-                    className={`p-3 rounded-xl text-sm font-medium transition-all ${
-                      currentEntry.bodyZones.includes(zone)
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'bg-white dark:bg-surface-dark text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-border-dark'
-                    }`}
-                  >
-                    {zone}
-                  </button>
-                ))}
+          </div>
+          <div className="bg-white dark:bg-surface-dark px-4 py-4 border-b border-slate-100 dark:border-border-dark">
+            <textarea
+              value={currentEntry.thoughts}
+              onChange={(e) => updateCurrentEntry('thoughts', e.target.value)}
+              className="w-full min-h-[100px] bg-transparent text-base text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none border-none outline-none focus:ring-0 p-0"
+              placeholder="О чем думаете..."
+            />
+          </div>
+
+          {/* Телесные ощущения */}
+          <div className="bg-slate-50 dark:bg-surface-dark-alt px-4 py-3 border-b border-slate-200 dark:border-border-dark">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              Телесные ощущения
+            </div>
+          </div>
+          <div className="bg-white dark:bg-surface-dark px-4 py-4 border-b border-slate-100 dark:border-border-dark">
+            <textarea
+              value={currentEntry.bodyFeelings}
+              onChange={(e) => updateCurrentEntry('bodyFeelings', e.target.value)}
+              className="w-full min-h-[100px] bg-transparent text-base text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none border-none outline-none focus:ring-0 p-0"
+              placeholder="Ощущения в теле..."
+            />
+          </div>
+
+          {/* Части тела */}
+          {currentEntry.bodyZones.length > 0 && (
+            <>
+              <div className="bg-slate-50 dark:bg-surface-dark-alt px-4 py-3 border-b border-slate-200 dark:border-border-dark">
+                <div className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                  Части тела
+                </div>
               </div>
-            </div>
-          </div>
-        )}
+              <div className="bg-white dark:bg-surface-dark px-4 py-4 border-b border-slate-100 dark:border-border-dark">
+                <div className="text-base text-slate-900 dark:text-white">
+                  {currentEntry.bodyZones.join(', ')}
+                </div>
+              </div>
+            </>
+          )}
 
-        {activeTab === 'consequences' && (
-          <div className="space-y-4">
-            <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2 block">
-                Как это мешает жить
-              </label>
-              <textarea
-                value={currentEntry.consequences}
-                onChange={(e) => updateCurrentEntry('consequences', e.target.value)}
-                className="w-full min-h-[200px] p-4 rounded-xl bg-white dark:bg-surface-dark border-2 border-transparent focus:border-primary/50 focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-all shadow-sm"
-                placeholder="Какие проблемы это создаёт..."
-              />
+          {/* Последствия */}
+          <div className="bg-slate-50 dark:bg-surface-dark-alt px-4 py-3 border-b border-slate-200 dark:border-border-dark">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              Последствия
             </div>
           </div>
-        )}
+          <div className="bg-white dark:bg-surface-dark px-4 py-4 border-b border-slate-100 dark:border-border-dark">
+            <textarea
+              value={currentEntry.consequences}
+              onChange={(e) => updateCurrentEntry('consequences', e.target.value)}
+              className="w-full min-h-[100px] bg-transparent text-base text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none border-none outline-none focus:ring-0 p-0"
+              placeholder="Как это мешает жить..."
+            />
+          </div>
 
-        {activeTab === 'withoutProblem' && (
-          <div className="space-y-4">
-            <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2 block">
-                Что бы я делал без проблемы
-              </label>
-              <textarea
-                value={currentEntry.withoutProblem}
-                onChange={(e) => updateCurrentEntry('withoutProblem', e.target.value)}
-                className="w-full min-h-[200px] p-4 rounded-xl bg-white dark:bg-surface-dark border-2 border-transparent focus:border-primary/50 focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-all shadow-sm"
-                placeholder="Как бы изменилась жизнь..."
-              />
+          {/* Без проблемы */}
+          <div className="bg-slate-50 dark:bg-surface-dark-alt px-4 py-3">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              Без проблемы
             </div>
           </div>
-        )}
+          <div className="bg-white dark:bg-surface-dark px-4 py-4">
+            <textarea
+              value={currentEntry.withoutProblem}
+              onChange={(e) => updateCurrentEntry('withoutProblem', e.target.value)}
+              className="w-full min-h-[100px] bg-transparent text-base text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none border-none outline-none focus:ring-0 p-0"
+              placeholder="Что бы вы делали без проблемы..."
+            />
+          </div>
+        </div>
       </main>
 
       {/* Bottom Action Bar */}
@@ -241,7 +245,6 @@ export default function EntryView() {
             onClick={handleSave}
             className="h-12 w-full rounded-xl bg-primary text-white font-semibold text-base shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
           >
-            <span className="material-symbols-outlined text-[20px]">save</span>
             Сохранить изменения
           </button>
         </div>

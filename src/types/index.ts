@@ -37,7 +37,7 @@ export interface AppContextType {
   loadEntries: () => Promise<void>;
   resetCurrentEntry: () => void;
   loadEntryForEditing: (id: string) => void;
-  updateExistingEntry: () => Promise<void>;
+  updateExistingEntry: (newCreatedAt?: string) => Promise<void>;
 }
 
 export const EMOJIS = ['😰', '😨', '😔', '😌', '😤', '😢', '😊', '🤔'];

@@ -120,7 +120,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, [entries]);
 
-  const updateExistingEntry = useCallback(async () => {
+  const updateExistingEntry = useCallback(async (newCreatedAt?: string) => {
     if (!editingEntryId) {
       throw new Error('No entry is being edited');
     }
@@ -128,12 +128,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try {
       const combinedText = `${currentEntry.situation} ${currentEntry.thoughts} ${currentEntry.consequences}`;
 
-      const updated = await updateStorageEntry(editingEntryId, {
+      const updateData: Partial<Entry> = {
         ...currentEntry,
         title: generateTitle(currentEntry.situation),
         emoji: getEmoji(combinedText),
         tags: extractTags(combinedText),
-      });
+      };
+
+      if (newCreatedAt) {
+        updateData.createdAt = newCreatedAt;
+      }
+
+      const updated = await updateStorageEntry(editingEntryId, updateData);
 
       if (updated) {
         setEntries(prev => prev.map(e => e.id === editingEntryId ? updated : e));
